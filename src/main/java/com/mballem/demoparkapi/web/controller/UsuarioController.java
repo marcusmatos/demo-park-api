@@ -68,4 +68,11 @@ public class UsuarioController {
         Usuario userUpdate = usuarioService.editarSenha(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmaSenha());
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        Usuario userUpdate = usuarioService.deletarPorId(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

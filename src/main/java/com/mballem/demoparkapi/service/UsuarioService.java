@@ -2,10 +2,12 @@ package com.mballem.demoparkapi.service;
 
 import com.mballem.demoparkapi.entity.Usuario;
 import com.mballem.demoparkapi.exception.EntityNotFoundException;
+import com.mballem.demoparkapi.exception.PasswordInvalidException;
 import com.mballem.demoparkapi.exception.UserNameUniqueViolationException;
 import com.mballem.demoparkapi.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,19 +41,24 @@ public class UsuarioService {
         );
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public Usuario editarSenha(Long id, String senhaAtual, String novaSenha, String confirmaSenha) {
         if (!novaSenha.equals(confirmaSenha)) {
-            throw new RuntimeException("Nova senha não confere com a confirmação de senha");
+            throw new PasswordInvalidException("Nova senha não confere com a confirmação de senha");
         }
 
         Usuario user = buscarPorId(id);
         if (!user.getPassword().equals(senhaAtual)) {
-            throw new RuntimeException("Sua senha não confere");
+            throw new PasswordInvalidException("Sua senha não confere");
         }
 
         user.setPassword(novaSenha);
+        usuarioRepository.save(user);
         return user;
     }
 
+    public Usuario deletarPorId(Long id) {
+        usuarioRepository.deleteById(id);
+        return null;
+    }
 }

@@ -5,17 +5,19 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-@NoArgsConstructor @AllArgsConstructor @Getter @Setter @ToString
-public class UsuarioCreateDTO {
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public class ClienteCreateDTO {
 
     @Email(message = "Formato do e-mail inválido", regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
     @NotBlank(message = "E-mail é um campo obrigatório")
     private String username;
-
     @NotBlank(message = "Senha é obrigatório")
     @Size(min = 6, max = 20, message = "Deve ter 6 caracteres")
     private String password;
-
-    //Implementar futuramente a Role automaticamente, por hora essa alteração crashou o projeto
-    //private String role;
+    public String nome;
+    public String cpf;
 }
