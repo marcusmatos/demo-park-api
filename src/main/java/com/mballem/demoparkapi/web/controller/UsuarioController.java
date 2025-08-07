@@ -6,6 +6,7 @@ import com.mballem.demoparkapi.web.dto.UsuarioCreateDTO;
 import com.mballem.demoparkapi.web.dto.UsuarioResponseDTO;
 import com.mballem.demoparkapi.web.dto.UsuarioSenhaDTO;
 import com.mballem.demoparkapi.web.dto.mapper.UsuarioMapper;
+import com.mballem.demoparkapi.web.exception.ErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -39,10 +40,10 @@ public class UsuarioController {
         responses = {
             @ApiResponse(responseCode = "201", description = "Recurso criado com sucesso",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponseDTO.class))),
-                @ApiResponse(responseCode = "409", description = "Email já cadastrado no sistema",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
-                @ApiResponse(responseCode = "422", description = "Recurso não processado por dados inválidos",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)))
+            @ApiResponse(responseCode = "409", description = "Email já cadastrado no sistema",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+            @ApiResponse(responseCode = "422", description = "Recurso não processado por dados inválidos",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
         })
     @PostMapping
     public ResponseEntity<UsuarioResponseDTO> create(@Valid @RequestBody UsuarioCreateDTO usuarioCreateDTO) {
