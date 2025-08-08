@@ -51,12 +51,12 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDTO(user));
     }
 
-    @Operation(summary = "Buscar usuario por id", description = "Recurso para buscar usuario",
+    @Operation(summary = "Buscar usuario por id", description = "Recurso para buscar um usuario pelo Id",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Recurso recuperado com sucesso",
+                    @ApiResponse(responseCode = "200", description = "Registro recuperado com sucesso",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponseDTO.class))),
                     @ApiResponse(responseCode = "404", description = "Registro não encontrado",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             })
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> getById(@PathVariable Long id) {
